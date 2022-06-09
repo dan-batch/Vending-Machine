@@ -1,8 +1,10 @@
 package com.techelevator;
 
+import java.math.BigDecimal;
+
 public class Gum extends Product {
-    public Gum(String slotLocation, String productName, String stringPrice) {
-        super(slotLocation, productName, stringPrice);
+    public Gum(String slotLocation, String productName, BigDecimal price) {
+        super(slotLocation, productName, price);
     }
 
     @Override

@@ -5,15 +5,14 @@ import java.math.BigDecimal;
 public abstract class Product {
     private String slotLocation;
     private String productName;
-    private String stringPrice;
     private BigDecimal price;
     private int quantity = 5;
     private String catchPhrase = "";
 
-    public Product(String slotLocation, String productName, String stringPrice) {
+    public Product(String slotLocation, String productName, BigDecimal price) {
         this.slotLocation = slotLocation;
         this.productName = productName;
-        BigDecimal price = new BigDecimal(this.stringPrice);
+        this.price = price;
     }
 
     public String getSlotLocation() {
@@ -22,10 +21,6 @@ public abstract class Product {
 
     public String getProductName() {
         return productName;
-    }
-
-    public String getStringPrice() {
-        return stringPrice;
     }
 
     public BigDecimal getPrice() {
