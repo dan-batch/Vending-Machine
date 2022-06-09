@@ -22,13 +22,10 @@ public class Inventory {
                     product = new Chips(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
                 } else if (linesArray[3].equalsIgnoreCase("drink")) {
                     product = new Beverages(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(product);
                 } else if (linesArray[3].equalsIgnoreCase("candy")) {
                     product = new Candy(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(product);
                 } else {
-                    product= new Gum(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(product);
+                    product = new Gum(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
                 }
                 inventoryMap.put(product.getSlotLocation(), product);
                 inventoryList.add(product);
@@ -42,15 +39,11 @@ public class Inventory {
         return inventoryList;
     }
 
-    public Map<String, BigDecimal> getInventoryPriceMap() {
-        return inventoryPriceMap;
+    public Map<String, Product> getInventoryMap() {
+        return inventoryMap;
+
+
     }
 
-    public Map<String, String> getInventoryNameMap() {
-        return inventoryNameMap;
-    }
-    public Map<String, Product> getInventoryMap(){
-        return inventoryMap;
-    }
 }
 

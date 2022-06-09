@@ -54,21 +54,21 @@ public class Bank {
         }
     }
 
-    public void purchaseItem(String slotLocation) {
+    public void purchaseAnItem(String slotLocation) {
         Inventory purchaseInventory = new Inventory();
         Product purchaseItem = purchaseInventory.getInventoryMap().get(slotLocation);
-        if ((currentMoneyProvided.compareTo(purchasePrice) == 0 || currentMoneyProvided.compareTo(purchasePrice) == 1)
+        if ((currentMoneyProvided.compareTo(purchaseItem.getPrice()) == 0 || currentMoneyProvided.compareTo(purchaseItem.getPrice()) == 1)
         && purchaseItem.getQuantity() > 0){
-            currentMoneyProvided = currentMoneyProvided.subtract(purchasePrice);
+            currentMoneyProvided = currentMoneyProvided.subtract(purchaseItem.getPrice());
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
                 writer.println(LocalDate.now() + " " + LocalDateTime.now() + " "
-                        + purchaseName + " "
+                        + purchaseItem.getProductName() + " "
                         + slotLocation + " "
-                        + purchasePrice + " " + currentMoneyProvided);
+                        + purchaseItem.getProductName() + " " + currentMoneyProvided);
             } catch (IOException e) {
                 System.out.println("File not found");
             }
-//in UI: sout(purchaseInventory.
+//in UI: sout(purchaseItem.getCatchPhrase); product.adjustQuantity;
         }
     }
 

@@ -32,12 +32,15 @@ public abstract class Product {
 
     public abstract String getCatchPhrase();
 
-    public void adjustQuantity(){
+    public void adjustQuantity() {
         quantity--;
     }
 
     @Override
     public String toString() {
-        return getSlotLocation() + " | " + getProductName() + " | " + getPrice();
+        return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + "\n";
+
+
+
     }
 }
