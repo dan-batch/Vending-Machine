@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Inventory {
-    private List<Product> inventoryList = new ArrayList<>();
+    private final List<Product> inventoryList = new ArrayList<>();
 
     public Inventory() {
         File inventoryFile = new File("vendingmachine.csv");
@@ -18,7 +18,6 @@ public class Inventory {
             while (readOnly.hasNextLine()) {
                 String lines = readOnly.nextLine();
                 String[] linesArray = lines.split("\\|");
-                String productName = linesArray[1];
                 if (linesArray[3].equalsIgnoreCase("chip")) {
                     Chips chip = new Chips(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
                     inventoryList.add(chip);
@@ -37,5 +36,10 @@ public class Inventory {
             System.out.println("File not found");
         }
     }
+
+    public List<Product> getInventoryList () {
+             return inventoryList;
+    }
+
 }
 

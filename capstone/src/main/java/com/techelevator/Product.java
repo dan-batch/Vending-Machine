@@ -34,4 +34,9 @@ public abstract class Product {
     public String getCatchPhrase() {
         return catchPhrase;
     }
+
+    @Override
+    public String toString() {
+        return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + "\n";
+    }
 }
