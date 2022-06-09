@@ -9,5 +9,6 @@ public class Practice {
 
 
         System.out.println(ourInventory.getInventoryList());
+
     }
 }

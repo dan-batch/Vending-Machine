@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Inventory {
-    private final List<Product> inventoryList = new ArrayList<>();
+    private List<Product> inventoryList = new ArrayList<>();
+    private Map<String, Product> inventoryMap = new HashMap<>();
 
     public Inventory() {
         File inventoryFile = new File("vendingmachine.csv");
@@ -18,28 +17,40 @@ public class Inventory {
             while (readOnly.hasNextLine()) {
                 String lines = readOnly.nextLine();
                 String[] linesArray = lines.split("\\|");
+                Product product;
                 if (linesArray[3].equalsIgnoreCase("chip")) {
-                    Chips chip = new Chips(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(chip);
+                    product = new Chips(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
                 } else if (linesArray[3].equalsIgnoreCase("drink")) {
-                    Beverages beverage = new Beverages(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(beverage);
+                    product = new Beverages(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
+                    inventoryList.add(product);
                 } else if (linesArray[3].equalsIgnoreCase("candy")) {
-                    Candy candy = new Candy(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(candy);
-                } else if (linesArray[3].equalsIgnoreCase("gum")) {
-                    Gum gum = new Gum(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
-                    inventoryList.add(gum);
+                    product = new Candy(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
+                    inventoryList.add(product);
+                } else {
+                    product= new Gum(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
+                    inventoryList.add(product);
                 }
+                inventoryMap.put(product.getSlotLocation(), product);
+                inventoryList.add(product);
             }
         } catch (IOException e) {
             System.out.println("File not found");
         }
     }
 
-    public List<Product> getInventoryList () {
-             return inventoryList;
+    public List<Product> getInventoryList() {
+        return inventoryList;
     }
 
+    public Map<String, BigDecimal> getInventoryPriceMap() {
+        return inventoryPriceMap;
+    }
+
+    public Map<String, String> getInventoryNameMap() {
+        return inventoryNameMap;
+    }
+    public Map<String, Product> getInventoryMap(){
+        return inventoryMap;
+    }
 }
 

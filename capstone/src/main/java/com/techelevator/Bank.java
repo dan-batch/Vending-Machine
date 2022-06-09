@@ -54,8 +54,46 @@ public class Bank {
         }
     }
 
-    public void purchaseItem(String slotLocation){
+    public void purchaseItem(String slotLocation) {
         Inventory purchaseInventory = new Inventory();
-        purchaseInventory.getInventoryList
+        Product purchaseItem = purchaseInventory.getInventoryMap().get(slotLocation);
+        if ((currentMoneyProvided.compareTo(purchasePrice) == 0 || currentMoneyProvided.compareTo(purchasePrice) == 1)
+        && purchaseItem.getQuantity() > 0){
+            currentMoneyProvided = currentMoneyProvided.subtract(purchasePrice);
+            try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
+                writer.println(LocalDate.now() + " " + LocalDateTime.now() + " "
+                        + purchaseName + " "
+                        + slotLocation + " "
+                        + purchasePrice + " " + currentMoneyProvided);
+            } catch (IOException e) {
+                System.out.println("File not found");
+            }
+//in UI: sout(purchaseInventory.
+        }
+    }
+
+    public String giveChange(){for (int i = 0; (currentMoneyProvided.compareTo(BigDecimal.ZERO) == 1); i++){
+        if (currentMoneyProvided.compareTo(QUARTER) == 1 || currentMoneyProvided.compareTo(QUARTER) == 0){
+            numberOfQuarters ++;
+            currentMoneyProvided = currentMoneyProvided.subtract(QUARTER);
+            changeProvided = changeProvided.add(QUARTER);
+        }else if ((currentMoneyProvided.compareTo(DIME) == 1 || currentMoneyProvided.compareTo(DIME) == 0)
+                && (currentMoneyProvided.compareTo(QUARTER) == -1)){
+            numberOfDimes++;
+            currentMoneyProvided = currentMoneyProvided.add(DIME);
+            changeProvided = changeProvided.add(DIME);
+        }else if((currentMoneyProvided.compareTo(NICKEL) == 1 || currentMoneyProvided.compareTo(NICKEL) == 0)
+                && (currentMoneyProvided.compareTo(DIME) == -1)){
+            numberOfNickels++;
+            currentMoneyProvided = currentMoneyProvided.add(NICKEL);
+            changeProvided = changeProvided.add(NICKEL);
+        }
+    }return changeProvided.toString();
+
+        // in UI: souf("You received %d quarters, %d dimes, and %d nickels, totaling %s." numberOfQuarters, numberOfDimes, numberOfNickels, changeProvided.toString());
+
+
+
+
     }
 }

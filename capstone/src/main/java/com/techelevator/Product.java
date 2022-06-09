@@ -7,7 +7,6 @@ public abstract class Product {
     private String productName;
     private BigDecimal price;
     private int quantity = 5;
-    private String catchPhrase = "";
 
     public Product(String slotLocation, String productName, BigDecimal price) {
         this.slotLocation = slotLocation;
@@ -31,12 +30,14 @@ public abstract class Product {
         return quantity;
     }
 
-    public String getCatchPhrase() {
-        return catchPhrase;
+    public abstract String getCatchPhrase();
+
+    public void adjustQuantity(){
+        quantity--;
     }
 
     @Override
     public String toString() {
-        return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + "\n";
+        return getSlotLocation() + " | " + getProductName() + " | " + getPrice();
     }
 }
