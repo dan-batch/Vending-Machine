@@ -26,14 +26,14 @@ public abstract class Product {
         return price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getQuantity() {
+        if (quantity > 0) {
+            return String.valueOf(quantity);
+        } else {
+            return "Sold Out";
+        }
     }
 
-    //FOR TESTING PURPOSES ONLY!
-    public void setQuantity(int quantity){
-        this.quantity = quantity;
-    }
 
     public abstract String getCatchPhrase();
 
@@ -43,8 +43,7 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + "\n";
-
+        return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + " | " + getQuantity() + " remaining" + "\n";
 
 
     }
