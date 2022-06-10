@@ -72,7 +72,8 @@ public class Bank {
         }
     }
 
-    public String giveChange(){for (int i = 0; (currentMoneyProvided.compareTo(BigDecimal.ZERO) == 1); i++){
+    public String giveChange(){
+        for (int i = 0; (currentMoneyProvided.compareTo(BigDecimal.ZERO) == 1); i++){
         if (currentMoneyProvided.compareTo(QUARTER) == 1 || currentMoneyProvided.compareTo(QUARTER) == 0){
             numberOfQuarters ++;
             currentMoneyProvided = currentMoneyProvided.subtract(QUARTER);
