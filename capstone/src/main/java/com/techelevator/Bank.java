@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import com.techelevator.exceptions.NegativeMoneyException;
 import com.techelevator.exceptions.NotEnoughMoneyException;
 import com.techelevator.exceptions.SoldOutException;
 
@@ -68,7 +69,7 @@ public class Bank {
                 System.out.println("File not found");
             }
         } else {
-            System.out.println("You must add a positive value of money, fool");
+            throw new NegativeMoneyException();
         }
     }
 
