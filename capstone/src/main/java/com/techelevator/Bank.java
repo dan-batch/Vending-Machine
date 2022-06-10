@@ -63,7 +63,7 @@ public class Bank {
         if (moneyToAdd.compareTo(BigDecimal.ZERO) == 1) {
             currentMoneyProvided = currentMoneyProvided.add(moneyToAdd);
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(LocalDate.now() + " " + LocalDateTime.now() + " $" + moneyToAdd + " $" + currentMoneyProvided);
+                writer.println(LocalDateTime.now() + " $" + moneyToAdd + " $" + currentMoneyProvided);
             } catch (IOException e) {
                 System.out.println("File not found");
             }
@@ -81,7 +81,7 @@ public class Bank {
             currentMoneyProvided = currentMoneyProvided.subtract(purchaseItem.getPrice());
             purchaseItem.adjustQuantity();
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(LocalDate.now() + " " + LocalDateTime.now() + " "
+                writer.println(LocalDateTime.now() + " "
                         + purchaseItem.getProductName() + " "
                         + slotLocation + " $"
                         + purchaseItem.getPrice() + " $" + currentMoneyProvided);
@@ -112,7 +112,7 @@ public class Bank {
                 changeProvided = changeProvided.add(NICKEL);
             }
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(LocalDate.now() + " " + LocalDateTime.now() + " "
+                writer.println(LocalDateTime.now() + " "
                         + "GIVE CHANGE: $"
                         + changeProvided + " $"
                         + currentMoneyProvided);
