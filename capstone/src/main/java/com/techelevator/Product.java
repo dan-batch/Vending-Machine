@@ -30,6 +30,11 @@ public abstract class Product {
         return quantity;
     }
 
+    //FOR TESTING PURPOSES ONLY!
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
     public abstract String getCatchPhrase();
 
     public void adjustQuantity() {
