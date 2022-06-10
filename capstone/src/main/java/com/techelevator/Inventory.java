@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Inventory {
-    private Map<String, Product> inventoryMap = new HashMap<>();
+    private SortedMap<String, Product> inventoryMap = new TreeMap<>();
 
     public Inventory() {
         File inventoryFile = new File("vendingmachine.csv");
@@ -33,7 +33,7 @@ public class Inventory {
         }
     }
 
-    public Map<String, Product> getInventoryMap() {
+    public SortedMap<String, Product> getInventoryMap() {
         return inventoryMap;
 
 

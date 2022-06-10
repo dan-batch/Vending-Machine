@@ -23,7 +23,7 @@ public class VendingMachineCLI {
         Bank bank = new Bank();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Umbrella Corp presents 'It's Raining Chips Vending Machine'");
+        System.out.println("Umbrella Corp presents 'It's Raining Chips!' Vending Machine");
         while (true) {
             System.out.println("Main Menu\n" + "(1) Display Vending Machine Items\n" + "(2) Purchase\n" + "(3) Exit");
             String mainMenuUserInput = scanner.nextLine();
@@ -55,7 +55,7 @@ public class VendingMachineCLI {
                         String userPurchaseChoice = scanner.nextLine();
                         try {
                             bank.purchaseAnItem(userPurchaseChoice.toUpperCase());
-                            System.out.printf("You bought a(n) %s! %s \n \n",
+                            System.out.printf("You bought %s! %s \n \n",
                                     bank.getPurchaseInventory().getInventoryMap().get(userPurchaseChoice.toUpperCase()).getProductName(),
                                     bank.getPurchaseInventory().getInventoryMap().get(userPurchaseChoice.toUpperCase()).getCatchPhrase());
                         } catch (InvalidSlotLocationException isle) {
@@ -74,10 +74,13 @@ public class VendingMachineCLI {
                 }
 
             } else if (mainMenuUserInput.equalsIgnoreCase("3")) {
+                System.out.println("Thank you for using the vending machine!\nRemember: Umbrella Corp knows your social security number :)");
                 break;
+            } else if (mainMenuUserInput.equalsIgnoreCase("4")) {
+                bank.generateSalesReport();
             }
+
         }
 
     }
-
 }

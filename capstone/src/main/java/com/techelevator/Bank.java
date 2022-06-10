@@ -5,12 +5,15 @@ import com.techelevator.exceptions.NegativeMoneyException;
 import com.techelevator.exceptions.NotEnoughMoneyException;
 import com.techelevator.exceptions.SoldOutException;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 public class Bank {
 
@@ -18,6 +21,8 @@ public class Bank {
     private BigDecimal changeProvided = BigDecimal.ZERO;
 
     private Inventory purchaseInventory = new Inventory();
+
+    private BigDecimal totalSales = BigDecimal.ZERO;
 
 
     private final BigDecimal QUARTER = new BigDecimal("0.25");
@@ -27,6 +32,8 @@ public class Bank {
     private int numberOfQuarters;
     private int numberOfDimes;
     private int numberOfNickels;
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm");
 
     public Bank() {
 
@@ -61,11 +68,15 @@ public class Bank {
         return purchaseInventory;
     }
 
+    public BigDecimal getTotalSales() {
+        return totalSales;
+    }
+
     public void addMoney(BigDecimal moneyToAdd) {
         if (moneyToAdd.compareTo(BigDecimal.ZERO) == 1) {
             currentMoneyProvided = currentMoneyProvided.add(moneyToAdd);
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(LocalDateTime.now() + " $" + moneyToAdd + " $" + currentMoneyProvided);
+                writer.println(dtf.format(LocalDateTime.now()) + " $" + moneyToAdd + " $" + currentMoneyProvided);
             } catch (IOException e) {
                 System.out.println("File not found");
             }
@@ -85,8 +96,10 @@ public class Bank {
                 && purchaseItem.getQuantity() > 0) {
             currentMoneyProvided = currentMoneyProvided.subtract(purchaseItem.getPrice());
             purchaseItem.adjustQuantity();
+            purchaseItem.adjustUnitsSold();
+            totalSales = getTotalSales().add(purchaseItem.getPrice());
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(LocalDateTime.now() + " "
+                writer.println(dtf.format(LocalDateTime.now()) + " "
                         + purchaseItem.getProductName() + " "
                         + slotLocation + " $"
                         + purchaseItem.getPrice() + " $" + currentMoneyProvided);
@@ -116,17 +129,28 @@ public class Bank {
                 currentMoneyProvided = currentMoneyProvided.subtract(NICKEL);
                 changeProvided = changeProvided.add(NICKEL);
             }
-            try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(LocalDateTime.now() + " "
-                        + "GIVE CHANGE: $"
-                        + changeProvided + " $"
-                        + currentMoneyProvided);
-            } catch (IOException e) {
-                System.out.println("File not found");
-            }
-
+        }
+        try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
+            writer.println(dtf.format(LocalDateTime.now()) + " "
+                    + "GIVE CHANGE: $"
+                    + changeProvided + " $"
+                    + currentMoneyProvided);
+        } catch (IOException e) {
+            System.out.println("File not found");
         }
         return changeProvided.toString();
-        //In UI: System.out.printf("You received %d quarters, %d dimes, and %d nickels, totaling %s.", numberOfQuarters, numberOfDimes, numberOfNickels, changeProvided.toString());
+    }
+
+    public void generateSalesReport() {
+        File salesReport = new File(dtf.format(LocalDateTime.now()) + "_Sales_Report.txt");
+        try (FileOutputStream fos = new FileOutputStream(salesReport, true); PrintWriter salesWriter = new PrintWriter(fos)) {
+            for (Map.Entry<String, Product> salesReportEntry : purchaseInventory.getInventoryMap().entrySet()) {
+                salesWriter.println(salesReportEntry.getValue().getProductName() + "|" + salesReportEntry.getValue().getUnitsSold());
+            }
+            salesWriter.print("**TOTAL SALES** $" + totalSales);
+
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 }
