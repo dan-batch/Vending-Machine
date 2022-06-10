@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import com.techelevator.exceptions.InvalidSlotLocationException;
 import com.techelevator.exceptions.NegativeMoneyException;
 import com.techelevator.exceptions.NotEnoughMoneyException;
 import com.techelevator.exceptions.SoldOutException;
@@ -56,7 +57,7 @@ public class Bank {
         return numberOfNickels;
     }
 
-    public Inventory getPurchaseInventory(){
+    public Inventory getPurchaseInventory() {
         return purchaseInventory;
     }
 
@@ -74,7 +75,10 @@ public class Bank {
     }
 
     public void purchaseAnItem(String slotLocation) {
-        Product purchaseItem = purchaseInventory.getInventoryMap().get(slotLocation);
+        Product purchaseItem = purchaseInventory.getInventoryMap().get(slotLocation.toUpperCase());
+        if (purchaseItem == null) {
+            throw new InvalidSlotLocationException();
+        }
         if (purchaseItem.getQuantity() == 0) {
             throw new SoldOutException();
         } else if ((currentMoneyProvided.compareTo(purchaseItem.getPrice()) == 0 || currentMoneyProvided.compareTo(purchaseItem.getPrice()) == 1)

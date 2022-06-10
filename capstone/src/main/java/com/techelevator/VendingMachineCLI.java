@@ -1,6 +1,9 @@
 package com.techelevator;
 
+import com.techelevator.exceptions.InvalidSlotLocationException;
 import com.techelevator.exceptions.NegativeMoneyException;
+import com.techelevator.exceptions.NotEnoughMoneyException;
+import com.techelevator.exceptions.SoldOutException;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -43,9 +46,35 @@ public class VendingMachineCLI {
                         } catch (NegativeMoneyException nMe) {
                             System.out.println("You need to add a positive amount of money, fool.");
                         }
+                    } else if (purchaseMenuUserInput.equalsIgnoreCase("2")) {
+                        for (Map.Entry<String, Product> entrySet : bank.getPurchaseInventory().getInventoryMap().entrySet()) {
+                            System.out.println(entrySet.getValue());
+
+                        }
+                        System.out.println("Please enter the slot location of the item you'd like to purchase");
+                        String userPurchaseChoice = scanner.nextLine();
+                        try {
+                            bank.purchaseAnItem(userPurchaseChoice.toUpperCase());
+                            System.out.printf("You bought a(n) %s! %s \n \n",
+                                    bank.getPurchaseInventory().getInventoryMap().get(userPurchaseChoice.toUpperCase()).getProductName(),
+                                    bank.getPurchaseInventory().getInventoryMap().get(userPurchaseChoice.toUpperCase()).getCatchPhrase());
+                        } catch (InvalidSlotLocationException isle) {
+                            System.out.println("That slot location does not exist. Please enter a valid slot location.");
+                        } catch (SoldOutException soe) {
+                            System.out.println("That item is sold out, please try again.");
+                        } catch (NotEnoughMoneyException neme) {
+                            System.out.println("You don't have enough money for that item. Please feed me more money!");
+                        }
+                    } else if (purchaseMenuUserInput.equalsIgnoreCase("3")) {
+                        bank.giveChange();
+                        System.out.printf("You received %d quarters, %d dimes, and %d nickels, totaling $%s in change.\n \n",
+                                bank.getNumberOfQuarters(), bank.getNumberOfDimes(), bank.getNumberOfNickels(), bank.getChangeProvided().toString());
+                        break;
                     }
                 }
 
+            } else if (mainMenuUserInput.equalsIgnoreCase("3")) {
+                break;
             }
         }
 
