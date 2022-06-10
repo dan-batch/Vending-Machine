@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Inventory {
-    private List<Product> inventoryList = new ArrayList<>();
     private Map<String, Product> inventoryMap = new HashMap<>();
 
     public Inventory() {
@@ -28,15 +27,10 @@ public class Inventory {
                     product = new Gum(linesArray[0], linesArray[1], new BigDecimal(linesArray[2]));
                 }
                 inventoryMap.put(product.getSlotLocation(), product);
-                inventoryList.add(product);
             }
         } catch (IOException e) {
             System.out.println("File not found");
         }
-    }
-
-    public List<Product> getInventoryList() {
-        return inventoryList;
     }
 
     public Map<String, Product> getInventoryMap() {

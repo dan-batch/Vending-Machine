@@ -26,12 +26,8 @@ public abstract class Product {
         return price;
     }
 
-    public String getQuantity() {
-        if (quantity > 0) {
-            return String.valueOf(quantity);
-        } else {
-            return "Sold Out";
-        }
+    public int getQuantity() {
+        return quantity;
     }
 
 
@@ -43,8 +39,10 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + " | " + getQuantity() + " remaining" + "\n";
-
-
+        if (quantity == 0) {
+            return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + " | " + "Sold Out" + "\n";
+        } else {
+            return getSlotLocation() + " | " + getProductName() + " | " + getPrice() + " | " + getQuantity() + " remaining" + "\n";
+        }
     }
 }

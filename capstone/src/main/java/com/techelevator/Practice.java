@@ -15,9 +15,10 @@ public class Practice {
 
         bank.addMoney(new BigDecimal("3.10"));
 
-        System.out.println(bank.getPurchaseInventory().getInventoryMap().get("A1").getQuantity());
-        bank.purchaseAnItem("A1");
-        System.out.println(bank.getPurchaseInventory().getInventoryMap().get("A1").getQuantity());
+        System.out.println(bank.getPurchaseInventory().getInventoryMap());
+
+        String bob = String.valueOf(5);
+
 
 
     }
