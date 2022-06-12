@@ -1,7 +1,7 @@
 package com.techelevator;
 
+import com.techelevator.exceptions.AddMoneyException;
 import com.techelevator.exceptions.InvalidSlotLocationException;
-import com.techelevator.exceptions.NegativeMoneyException;
 import com.techelevator.exceptions.NotEnoughMoneyException;
 import com.techelevator.exceptions.SoldOutException;
 
@@ -43,8 +43,8 @@ public class VendingMachineCLI {
                         String moneyToAddString = scanner.nextLine();
                         try {
                             bank.addMoney(new BigDecimal(moneyToAddString));
-                        } catch (NegativeMoneyException nMe) {
-                            System.out.println("You need to add a positive amount of money, fool.");
+                        } catch (AddMoneyException nMe) {
+                            System.out.println("This machine doesn't stock pennies. You need to add a positive amount of money that is divisible by at least a nickel.");
                         }
                     } else if (purchaseMenuUserInput.equalsIgnoreCase("2")) {
                         for (Map.Entry<String, Product> entrySet : bank.getPurchaseInventory().getInventoryMap().entrySet()) {

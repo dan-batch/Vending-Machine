@@ -1,7 +1,7 @@
 package com.techelevator;
 
+import com.techelevator.exceptions.AddMoneyException;
 import com.techelevator.exceptions.InvalidSlotLocationException;
-import com.techelevator.exceptions.NegativeMoneyException;
 import com.techelevator.exceptions.NotEnoughMoneyException;
 import com.techelevator.exceptions.SoldOutException;
 
@@ -73,7 +73,10 @@ public class Bank {
     }
 
     public void addMoney(BigDecimal moneyToAdd) {
-        if (moneyToAdd.compareTo(BigDecimal.ZERO) == 1) {
+        BigDecimal centsInADollar = new BigDecimal("100");
+        BigDecimal nickelTimes100 = new BigDecimal("5");
+        if (moneyToAdd.compareTo(BigDecimal.ZERO) == 1
+                && ((moneyToAdd.multiply(centsInADollar)).remainder(nickelTimes100)).compareTo(BigDecimal.ZERO) == 0) {
             currentMoneyProvided = currentMoneyProvided.add(moneyToAdd);
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
                 writer.println(dtf.format(LocalDateTime.now()) + " $" + moneyToAdd + " $" + currentMoneyProvided);
@@ -81,7 +84,7 @@ public class Bank {
                 System.out.println("File not found");
             }
         } else {
-            throw new NegativeMoneyException();
+            throw new AddMoneyException();
         }
     }
 
