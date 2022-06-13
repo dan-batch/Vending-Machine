@@ -79,7 +79,7 @@ public class Bank {
                 && ((moneyToAdd.multiply(centsInADollar)).remainder(nickelTimes100)).compareTo(BigDecimal.ZERO) == 0) {
             currentMoneyProvided = currentMoneyProvided.add(moneyToAdd);
             try (FileOutputStream fos = new FileOutputStream("Log.txt", true); PrintWriter writer = new PrintWriter(fos)) {
-                writer.println(dtf.format(LocalDateTime.now()) + " $" + moneyToAdd + " $" + currentMoneyProvided);
+                writer.println(dtf.format(LocalDateTime.now()) + " FEED MONEY:" + " $" + moneyToAdd + " $" + currentMoneyProvided);
             } catch (IOException e) {
                 System.out.println("File not found");
             }
