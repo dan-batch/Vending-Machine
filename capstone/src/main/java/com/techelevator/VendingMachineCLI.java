@@ -29,11 +29,7 @@ public class VendingMachineCLI {
             String mainMenuUserInput = scanner.nextLine();
 
             if (mainMenuUserInput.equalsIgnoreCase("1")) {
-                for (Map.Entry<String, Product> entrySet : bank.getPurchaseInventory().getInventoryMap().entrySet()) {
-                    System.out.println(entrySet.getValue());
-                }
-                System.out.println("Press enter to return to Main Menu: ");
-                String anyKey = scanner.nextLine();
+                displayInventory(bank, "Press enter to return to Main Menu: ", scanner);
             } else if (mainMenuUserInput.equalsIgnoreCase("2")) {
                 while (true) {
                     System.out.println("Purchase Menu\n" + "Current Money Provided: $" + bank.getCurrentMoneyProvided() + "\n" + "\n" + "(1) Feed Money\n" + "(2) Select Product\n" + "(3) Finish Transaction");
@@ -47,12 +43,7 @@ public class VendingMachineCLI {
                             System.out.println("This machine doesn't stock pennies. You need to add a positive amount of money that is divisible by at least a nickel.");
                         }
                     } else if (purchaseMenuUserInput.equalsIgnoreCase("2")) {
-                        for (Map.Entry<String, Product> entrySet : bank.getPurchaseInventory().getInventoryMap().entrySet()) {
-                            System.out.println(entrySet.getValue());
-
-                        }
-                        System.out.println("Please enter the slot location of the item you'd like to purchase");
-                        String userPurchaseChoice = scanner.nextLine();
+                        String userPurchaseChoice = displayInventory(bank, "Please enter the slot location of the item you'd like to purchase", scanner);
                         try {
                             bank.purchaseAnItem(userPurchaseChoice.toUpperCase());
                             System.out.printf("You bought %s! %s \n \n",
@@ -82,5 +73,14 @@ public class VendingMachineCLI {
 
         }
 
+    }
+
+    private String displayInventory(Bank bank, String x, Scanner scanner) {
+        for (Map.Entry<String, Product> entrySet : bank.getPurchaseInventory().getInventoryMap().entrySet()) {
+            System.out.println(entrySet.getValue());
+        }
+        System.out.println(x);
+        String anyKey = scanner.nextLine();
+        return anyKey;
     }
 }
